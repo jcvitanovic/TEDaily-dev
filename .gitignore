@@ -2,3 +2,4 @@ talk_data/
 tmp/
 venv
 *.pyc
+flask/
