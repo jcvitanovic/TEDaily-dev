@@ -1,2 +1,1 @@
-web: gunicorn app:app
-init: run.py
+web: gunicorn hello:app --log-file=-

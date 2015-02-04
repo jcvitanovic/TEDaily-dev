@@ -1,2 +1,4 @@
 talk_data/
 tmp/
+venv
+*.pyc
