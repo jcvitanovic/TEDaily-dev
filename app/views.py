@@ -10,7 +10,7 @@ from flask import Flask, redirect, url_for, render_template
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    user = {'nickname': 'Jelena'}
+    user = g.user
     return render_template('index.html',
                            title='Home',
                            user=user)
@@ -22,6 +22,8 @@ def load_user(id):
 
 @app.route('/login')
 def login():
+    if g.user is not None and g.user.is_authenticated():
+        return redirect(url_for('index'))    
     return render_template('login.html')
 
 
@@ -56,6 +58,21 @@ def oauth_callback(provider):
     login_user(user, True)
     return redirect(url_for('index'))    
 
+
+@app.route('/user/<nickname>')
+@login_required
+def user(nickname):
+    user = User.query.filter_by(nickname=nickname).first()
+    if user == None:
+        flash('User %s not found.' % nickname)
+        return redirect(url_for('index'))
+    return render_template('user.html',
+                           user=user)    
+
 @app.before_request
 def before_request():
 	g.user = current_user 
+
+@lm.user_loader
+def load_user(id):
+    return User.query.get(int(id))    
