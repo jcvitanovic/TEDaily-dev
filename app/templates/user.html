@@ -1,6 +1,15 @@
-<!-- extend base layout -->
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>User: {{ user.nickname }}!</h1>
+{% include 'flash.html' %}
+<div class="well well-large" style="height: 140px;">
+    <div class="pull-right">
+    </div>
+    <h1>{{user.nickname}}</h1>
+
+    {% if user.id == g.user.id %}
+        <a href="">Edit your preferences</a>
+    {% endif %}
+    </p>
+</div>
 {% endblock %}
