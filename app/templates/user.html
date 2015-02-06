@@ -6,9 +6,8 @@
     <div class="pull-right">
     </div>
     <h1>{{user.nickname}}</h1>
-
     {% if user.id == g.user.id %}
-        <a href="">Edit your preferences</a>
+        <a href="{{url_for('edit')}}">Edit your preferences</a>
     {% endif %}
     </p>
 </div>

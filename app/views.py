@@ -4,7 +4,7 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 from oauth import OAuthSignIn
 from models import User
 from flask import Flask, redirect, url_for, render_template
-
+from forms import LoginForm, EditForm
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -76,3 +76,9 @@ def before_request():
 @lm.user_loader
 def load_user(id):
     return User.query.get(int(id))    
+
+@app.route('/edit', methods=['GET','POST'])
+@login_required
+def edit():
+    form = EditForm(g.user.nickname)
+    return render_template('edit.html', form = form)
